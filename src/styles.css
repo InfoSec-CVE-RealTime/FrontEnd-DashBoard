@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f6f5f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Montserrat", sans-serif;
+  height: 100vh;
+  margin: -20px 0 50px;
+}
+.dropdown {
+    height: 60%;
+    border-radius: 7px;
+    margin-top: 20px;
+    padding: 7px 7px 7px 7px;
+    margin-left:18%;
+    color: #ffca2b;
+    border: 2px solid #ffca2b;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
