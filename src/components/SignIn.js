@@ -1,92 +1,91 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import * as Components from "./Components";
-import { version } from "react";
+import axios from "axios";
 import "../styles.css";
 import { useNavigate } from "react-router-dom";
 
 const FLASK_SERVER_IP = "http://127.0.0.1:5000";
 
-function SignIn() {
-  console.log(version);
-  const [signIn, toggle] = useState(true);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+const SignIn = () => {
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState(null);
+  const [signIn, setSignIn] = useState(null);
   const navigate = useNavigate();
 
-  function callApiSignUP() {
+  const handleEmailChange = (event) => {
+    let email = event.target.value;
+    setEmail(email);
+    console.log(email);
+  };
+
+  const handlePasswordChange = (event) => {
+    let pass = event.target.value;
+    setPassword(pass);
+    console.log(pass);
+  };
+
+  const toggleIsSignIn = (val) => {
+    setSignIn(val);
+  };
+
+  const handleConfirmPasswordChange = (event) => {
+    let pass = event.target.value;
+    setConfirmPassword(pass);
+  };
+
+  const handleNameChange = (event) => {
+    let name = event.target.value;
+    setName(name);
+  };
+
+  const callApiSignUP = () => {
     alert("Great that you have signed up now!");
-    console.log(name, email, password);
     const userData = {
       name: name,
       email: email,
       password: password,
     };
 
-    fetch(FLASK_SERVER_IP + "/api/v1.0/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+    axios
+      .post(FLASK_SERVER_IP + "/api/v1.0/signup", userData)
+      .then((response) => {
+        console.log(response.data);
         // handle response data here
       })
       .catch((error) => {
         console.error(error);
         // handle error here
       });
-    toggle(true);
-  }
+    toggleIsSignIn(true);
+  };
 
-  function callApiSignIn() {
+  const callApiSignIn = async (event) => {
+    event.preventDefault();
+    console.log({ email, password });
+
     const userData = {
       email: email,
       password: password,
     };
 
-    fetch(FLASK_SERVER_IP + "/api/v1.0/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
-      .then(responseHandler)
-      .then((data) => {
+    try {
+      const response = await axios.post(
+        `${FLASK_SERVER_IP}/api/v1.0/login`,
+        userData
+      );
+      console.log(response);
+
+      if (response.status !== 400) {
         alert("User logged in successfully!");
+        setSignIn(false);
         navigate("/TopVulnerabilities");
-      })
-      .catch((error) => {
-        alert("Error occurred. Please try again.");
-        console.log(error);
-      });
-  }
-
-  function responseHandler(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Error occurred. Please try again - " + error);
     }
-  }
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
   };
 
   return (
@@ -138,9 +137,7 @@ function SignIn() {
             onChange={handlePasswordChange}
           />
           <Components.Anchor href="#">Forgot your password?</Components.Anchor>
-          <Components.Button onClick={callApiSignIn}>
-            Sigin In
-          </Components.Button>
+          <Components.Button onClick={callApiSignIn}>Sign In</Components.Button>
         </Components.Form>
       </Components.SignInContainer>
 
@@ -151,7 +148,7 @@ function SignIn() {
             <Components.Paragraph>
               To keep connected with us please login with your personal info
             </Components.Paragraph>
-            <Components.GhostButton onClick={() => toggle(true)}>
+            <Components.GhostButton onClick={() => toggleIsSignIn(true)}>
               Sign In
             </Components.GhostButton>
           </Components.LeftOverlayPanel>
@@ -161,14 +158,14 @@ function SignIn() {
             <Components.Paragraph>
               Enter Your personal details and start journey with us
             </Components.Paragraph>
-            <Components.GhostButton onClick={() => toggle(false)}>
-              Sigin Up
+            <Components.GhostButton onClick={() => toggleIsSignIn(false)}>
+              Sign Up
             </Components.GhostButton>
           </Components.RightOverlayPanel>
         </Components.Overlay>
       </Components.OverlayContainer>
     </Components.Container>
   );
-}
+};
 
 export default SignIn;
