@@ -53,7 +53,6 @@ cursor: pointer;
 	color: #000000;
 	font-weight:600;
 	font-size: 20px;
-	color: #fff;
 }
 `;
 
