@@ -7,7 +7,7 @@
 }
 
 body {
-  background: #f6f5f7;
+  background: #f8f8f8 !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,4 +28,18 @@ body {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+.main-window {
+    height: 100%;
+    width: 100%;
+}
+
+.text-selected {
+    color: #ffca2b !important;
 }

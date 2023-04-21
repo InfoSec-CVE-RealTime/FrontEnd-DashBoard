@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "./Navbar";
-import NavbarTop from "./NavbarTop";
+import Navbar from "../Navbar";
+import NavbarTop from "../NavbarTop";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useState, useEffect } from 'react';

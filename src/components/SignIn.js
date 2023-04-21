@@ -109,7 +109,7 @@ const SignIn = () => {
     } else {
       setLoading(false);
     }
-  });
+  }, []);
 
   return (
     <>
