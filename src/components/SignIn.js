@@ -4,7 +4,6 @@ import axios from "axios";
 import "../styles.css";
 import { useNavigate } from "react-router-dom";
 
-const FLASK_SERVER_IP = "http://127.0.0.1:5000";
 
 const SignIn = () => {
   const [name, setName] = useState(null);
@@ -49,7 +48,7 @@ const SignIn = () => {
     };
 
     axios
-      .post(FLASK_SERVER_IP + "/api/v1.0/signup", userData)
+      .post(window.host + "/api/v1.0/signup", userData)
       .then((response) => {
         console.log(response.data);
         // handle response data here
@@ -72,7 +71,7 @@ const SignIn = () => {
 
     try {
       const response = await axios.post(
-        `${FLASK_SERVER_IP}/api/v1.0/login`,
+        `${window.host}/api/v1.0/login`,
         userData
       );
       console.log(response);

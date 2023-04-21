@@ -44,7 +44,7 @@ function ProductsSection() {
   const [yAxisData, setyAxisData] = useState(null)
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/api/v1.0/top_products")
+    fetch(window.host + "/api/v1.0/top_products")
      .then((response) => response.json())
      .then((data) => {
       const xAxis=[];

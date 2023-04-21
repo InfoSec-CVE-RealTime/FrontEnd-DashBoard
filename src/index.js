@@ -11,7 +11,10 @@ import Clustering from './components/Clustering';
 import VendorsSection from './components/VendorsSection';
 import ProductsSection from './components/ProductsSection';
 
-
+if(process.env.NODE_ENV === 'development')
+  window.host = "http://localhost:5000";
+else
+  window.host = "";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
