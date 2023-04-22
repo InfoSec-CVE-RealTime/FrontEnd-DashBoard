@@ -1,18 +1,26 @@
 import React from "react";
-import Navbar from "../Navbar";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useState, useEffect } from 'react';
   
 function ThreatProliferation() {
+  const [value, setValue] = React.useState('fruit');
+  const optionsOne = [
+    {label: 'All Time', value: 'all'},
+  ];
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  }
+
   const [options, setOptions] = useState({
     chart: {
-      type: 'column'
+      type: 'line'
   },legend: {
     enabled: false
   }, 
     title: {
-      text: "Threat Proliferation"
+      text: ""
     },
     xAxis: {
       categories: [],
@@ -22,7 +30,7 @@ function ThreatProliferation() {
   },
   plotOptions: {
     series: {
-        color: '#ffca2b'
+        color: '#009bb0'
     }
 },
   yAxis: {
@@ -67,16 +75,25 @@ function ThreatProliferation() {
   },[]);
   
   return (
-    <div> 
-    <Navbar></Navbar>
-    <div style={{ }}>
-     <HighchartsReact
-      highcharts={Highcharts}
-      options={options}
-      />
+    <div>
+      <div className="d-flex justify-content-between">
+        <h2 className="text-selected d-flex flex-column justify-content-end">Threat Proliferation</h2>
+
+        <select className="dropdown" value={value} onChange={handleChange}>
+          {optionsOne.map((optionOne) => (
+            <option value={optionOne.value}>{optionOne.label}</option>
+          ))}
+        </select>
       </div>
-  </div>
+
+      <div className="content-box mt-2 pt-4">
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+        />
+      </div>
+    </div>
   );
-};
+}
   
 export default ThreatProliferation;

@@ -8,11 +8,17 @@ import {Nav, NavTitle, NavLink, SubscriptionNav, SubscriptionButton} from './Nav
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import TopVulnerabilities from "./pages/TopVulnerabilities";
+import ThreatProliferation from "./pages/ThreatProliferation";
+import ImpactOverTheYears from "./pages/ImpactOverTheYears";
+import ThreatsChangedOverTime from "./pages/ThreatsChangedOverTime";
+import Clustering from "./pages/Clustering";
+import VendorsSection from "./pages/VendorsSection";
+import ProductsSection from "./pages/ProductsSection";
 
 const FLASK_SERVER_IP = "http://127.0.0.1:5000";
 
 function Dashboard() {
-  const [activePage, setActivePage] = useState("TopVulnerabilities");
+  const [activePage, setActivePage] = useState("ThreatProliferation");
   const [accountInfo, setAccountInfo] = useState({});
   const navigate = useNavigate();
 
@@ -55,17 +61,23 @@ function Dashboard() {
         <Row>
           <Col xs={9}>
             {activePage === "TopVulnerabilities" && <TopVulnerabilities/>}
+            {activePage === "ThreatProliferation" && <ThreatProliferation/>}
+            {activePage === "ImpactOverTheYears" && <ImpactOverTheYears/>}
+            {activePage === "ThreatsChangedOverTime" && <ThreatsChangedOverTime/>}
+            {activePage === "Clustering" && <Clustering/>}
+            {activePage === "VendorsSection" && <VendorsSection/>}
+            {activePage === "ProductsSection" && <ProductsSection/>}
           </Col>
           <Col xs={3}>
             <Nav>
               <NavTitle>Pages</NavTitle>
-              <NavLink onClick={() => setActivePage("TopVulnerabilities")} activeStyle className={activePage === "TopVulnerabilities" ? "text-selected" : ""}>Top Vulnerabilities</NavLink>
               <NavLink onClick={() => setActivePage("ThreatProliferation")} activeStyle className={activePage === "ThreatProliferation" ? "text-selected" : ""}>Threat Proliferation</NavLink>
+              <NavLink onClick={() => setActivePage("TopVulnerabilities")} activeStyle className={activePage === "TopVulnerabilities" ? "text-selected" : ""}>Top Vulnerabilities</NavLink>
               <NavLink onClick={() => setActivePage("ImpactOverTheYears")} activeStyle className={activePage === "ImpactOverTheYears" ? "text-selected" : ""}>Impact Over The Years</NavLink>
               <NavLink onClick={() => setActivePage("ThreatsChangedOverTime")} activeStyle className={activePage === "ThreatsChangedOverTime" ? "text-selected" : ""}>How Threats Have Changed Over Time</NavLink>
               <NavLink onClick={() => setActivePage("Clustering")} activeStyle className={activePage === "Clustering" ? "text-selected" : ""}>Clustering</NavLink>
-              <NavLink onClick={() => setActivePage("VendorsSection")} activeStyle className={activePage === "VendorsSection" ? "text-selected" : ""}>Vendors Section</NavLink>
-              <NavLink onClick={() => setActivePage("ProductsSection")} activeStyle className={activePage === "ProductsSection" ? "text-selected border-bottom-0" : "border-bottom-0"}>Products Section</NavLink>
+              <NavLink onClick={() => setActivePage("VendorsSection")} activeStyle className={activePage === "VendorsSection" ? "text-selected" : ""}>Top Vendors</NavLink>
+              <NavLink onClick={() => setActivePage("ProductsSection")} activeStyle className={activePage === "ProductsSection" ? "text-selected border-bottom-0" : "border-bottom-0"}>Top Products</NavLink>
             </Nav>
             <Nav className="mt-3 p-2 ps-3 pe-3">
               <NavTitle>Account</NavTitle>

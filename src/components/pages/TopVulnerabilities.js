@@ -93,7 +93,7 @@ function TopVulnerabilities() {
   return (
     <div>
       <div className="d-flex justify-content-between">
-        <h3 className="text-selected d-flex flex-column justify-content-end">Top Vulnerabilities</h3>
+        <h2 className="text-selected d-flex flex-column justify-content-end">Top Vulnerabilities</h2>
 
         <select className="dropdown" value={value} onChange={handleChange}>
           {optionsOne.map((optionOne) => (
@@ -102,7 +102,7 @@ function TopVulnerabilities() {
         </select>
       </div>
 
-      <div className="content-box mt-2">
+      <div className="content-box mt-2 pt-4">
         <HighchartsReact
           highcharts={Highcharts}
           options={options}

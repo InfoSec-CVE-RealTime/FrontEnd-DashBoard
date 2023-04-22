@@ -1,12 +1,29 @@
 import React from "react";
-import Navbar from "../Navbar";
-import NavbarTop from "../NavbarTop";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useState, useEffect } from 'react';
 
 
 function VendorsSection() {
+  const [value, setValue] = React.useState('fruit');
+  const optionsOne = [
+    {label: 'All Time', value: 'all'},
+    {label: 'Last Day', value: '1d'},
+    {label: 'Last 4 Days', value: '4d'},
+    {label: 'Last Week', value: '1w'},
+    {label: 'Last Month', value: '1m'},
+    {label: 'Last 3 Months', value: '3m'},
+    {label: 'Last 6 Months', value: '6m'},
+    {label: 'Last Year', value: '1y'},
+    {label: 'Last 3 Years', value: '3y'},
+    {label: 'Last 5 Years', value: '5y'},
+    {label: 'Last 10 Years', value: '10y'}
+  ];
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
   const [options, setOptions] = useState({
     chart: {
       type: 'column'
@@ -14,7 +31,7 @@ function VendorsSection() {
     enabled: false
   }, 
     title: {
-      text: "Top Vendors"
+      text: ""
     },
     xAxis: {
       categories: [],
@@ -24,7 +41,7 @@ function VendorsSection() {
   },
   plotOptions: {
     series: {
-        color: '#ffca2b'
+        color: '#009bb0'
     }
 },
   yAxis: {
@@ -61,28 +78,33 @@ function VendorsSection() {
       title: {
           text: "Vendors"
       }
-  }, series: [{ data: xAxis}] });
+  }, series: [{data: xAxis}] });
     
 
     })
     
   },[]);
+
   return (
     <div>
-      <Navbar></Navbar>
-      <div style={{ marginTop:'24%' }}>
-      <NavbarTop></NavbarTop>
-      <div style={{ }}>
-     <HighchartsReact
-      highcharts={Highcharts}
-      options={options}
-      />
+      <div className="d-flex justify-content-between">
+        <h2 className="text-selected d-flex flex-column justify-content-end">Top Vendors</h2>
+
+        <select className="dropdown" value={value} onChange={handleChange}>
+          {optionsOne.map((optionOne) => (
+            <option value={optionOne.value}>{optionOne.label}</option>
+          ))}
+        </select>
       </div>
+
+      <div className="content-box mt-2 pt-4">
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+        />
       </div>
-      </div>
-    
-    
+    </div>
   );
-};
+}
   
 export default VendorsSection;
