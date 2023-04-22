@@ -43,7 +43,6 @@ const SignIn = () => {
   };
 
   const callApiSignUP = () => {
-    alert("Great that you have signed up now!");
     const userData = {
       name: name,
       email: email,
@@ -53,12 +52,15 @@ const SignIn = () => {
     axios
       .post(window.host + "/api/v1.0/signup", userData)
       .then((response) => {
-        console.log(response.data);
-        // handle response data here
+
+        if (response.status === 200) {
+          localStorage.setItem("user_id", response.data.user_id);
+          setSignIn(false);
+          navigate(REDIRECT_URL);
+        }
       })
       .catch((error) => {
         console.error(error);
-        // handle error here
       });
     toggleIsSignIn(true);
   };
@@ -77,7 +79,6 @@ const SignIn = () => {
         `${window.host}/api/v1.0/login`,
         userData
       );
-      console.log(response);
 
       if (response.status === 200) {
         localStorage.setItem("user_id", response.data.user_id);
