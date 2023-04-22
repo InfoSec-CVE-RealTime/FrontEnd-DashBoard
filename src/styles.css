@@ -22,8 +22,8 @@ body {
     margin-top: 20px;
     padding: 7px 7px 7px 7px;
     margin-left:18%;
-    color: #ffca2b;
-    border: 2px solid #ffca2b;
+    color: #009bb0;
+    border: 2px solid #009bb0;
 }
 
 .dropdown:hover .dropdown-content {
@@ -41,7 +41,7 @@ body {
 }
 
 .text-selected {
-    color: #ffca2b !important;
+    color: #009bb0 !important;
 }
 
 .content-box {

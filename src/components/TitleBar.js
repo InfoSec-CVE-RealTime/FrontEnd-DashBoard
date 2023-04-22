@@ -10,7 +10,7 @@ import styled from 'styled-components';
 // } from './NavbarElements';
 
 const Title = styled.div`
-	background-color: #ffca2b;
+	background-color: #009bb0;
 	height: 60px;
 	width: 100%;
 	display: flex;

@@ -13,7 +13,7 @@ export const Nav = styled.nav`
 export const NavTitle = styled.h1`
   width: 100%;
   font-size: 20px;
-  color: #ffc62b;
+  color: #009bb0;
   text-align: center;
   font-weight: bold;
   margin-top: 5px;
@@ -32,19 +32,19 @@ export const NavLink = styled.div`
   cursor: pointer;
 
   &.active {
-    color: #d5a927;
+    color: #008394;
     font-weight: 600;
     font-size: 20px;
   }
 
   &:hover {
-    color: #d5a927;
+    color: #008394;
   }
 `;
 
 export const SubscriptionNav = styled.div`
   width: 100%;
-  background-color: #ffca2b;
+  background-color: #009bb0;
   border-radius: 5px;
   padding: 8px 12px;
   color: #fff;
@@ -54,9 +54,9 @@ export const SubscriptionNav = styled.div`
 
 export const SubscriptionButton = styled.button`
   border-radius: 20px;
-  border: 1px solid #ffb82b;
+  border: 1px solid #009bb0;
   background-color: #fff;
-  color: #ffb82b;
+  color: #009bb0;
   font-size: 14px;
   font-weight: bold;
   padding: 12px 45px;

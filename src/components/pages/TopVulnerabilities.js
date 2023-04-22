@@ -45,7 +45,7 @@ function TopVulnerabilities() {
     },
     plotOptions: {
       series: {
-        color: '#ffca2b'
+        color: '#009bb0'
       }
     },
     yAxis: {

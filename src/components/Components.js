@@ -79,8 +79,8 @@
 
  export const Button = styled.button`
     border-radius: 20px;
-    border: 1px solid #ffb82b;
-    background-color: #ffb82b;
+    border: 1px solid #009bb0;
+    background-color: #009bb0;
     color: #ffffff;
     font-size: 14px;
     font-weight: bold;
@@ -121,8 +121,8 @@ ${props =>
 
 export const Overlay = styled.div`
 background: #ff416c;
-background: -webkit-linear-gradient(to right, #ffb82b, #ffce2b);
-background: linear-gradient(to right, #ffb82b, #ffce2b);
+background: -webkit-linear-gradient(to right, #008394, #009bb0);
+background: linear-gradient(to right, #008394, #009bb0);
 background-repeat: no-repeat;
 background-size: cover;
 background-position: 0 0;
