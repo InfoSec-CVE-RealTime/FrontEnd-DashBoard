@@ -1,12 +1,10 @@
 import React from "react";
-import Navbar from "./Navbar";
-import NavbarTop from "./NavbarTop";
+import Navbar from "../Navbar";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useState, useEffect } from 'react';
-
   
-function ProductsSection() {
+function ThreatProliferation() {
   const [options, setOptions] = useState({
     chart: {
       type: 'column'
@@ -14,12 +12,12 @@ function ProductsSection() {
     enabled: false
   }, 
     title: {
-      text: "Top Products"
+      text: "Threat Proliferation"
     },
     xAxis: {
       categories: [],
       title: {
-          text: "Product"
+          text: "Date"
       }
   },
   plotOptions: {
@@ -29,7 +27,7 @@ function ProductsSection() {
 },
   yAxis: {
     title: {
-        text: 'Counts',
+        text: 'Count',
     },
     labels: {
         overflow: 'justify'
@@ -44,14 +42,14 @@ function ProductsSection() {
   const [yAxisData, setyAxisData] = useState(null)
 
   useEffect(() => {
-    fetch(window.host + "/api/v1.0/top_products")
+    fetch(window.host + "/api/v1.0/threat_proliferation")
      .then((response) => response.json())
      .then((data) => {
       const xAxis=[];
       const yAxis=[];
       for (let i = 0; i < data.length; i++) {
         xAxis.push(data[i].count)
-        yAxis.push(data[i].product)
+        yAxis.push(data[i].date)
        
     } 
     setxAxisData(xAxis);
@@ -59,7 +57,7 @@ function ProductsSection() {
     setOptions({ xAxis: {
       categories: yAxis,
       title: {
-          text: "Products"
+          text: "Date"
       }
   }, series: [{ data: xAxis}] });
     
@@ -69,21 +67,16 @@ function ProductsSection() {
   },[]);
   
   return (
-    
-    <div>
-      <Navbar style={{ marginTop:'-15% !important'}}></Navbar>
-      <div style={{ marginTop:'24%'}}>
-      <NavbarTop></NavbarTop>
-      <div style={{ }}>
+    <div> 
+    <Navbar></Navbar>
+    <div style={{ }}>
      <HighchartsReact
       highcharts={Highcharts}
       options={options}
       />
       </div>
-     </div>
-    </div> 
-       
+  </div>
   );
 };
   
-export default ProductsSection;
+export default ThreatProliferation;

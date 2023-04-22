@@ -1,10 +1,12 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
+import NavbarTop from "../NavbarTop";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useState, useEffect } from 'react';
-  
-function ThreatProliferation() {
+
+
+function VendorsSection() {
   const [options, setOptions] = useState({
     chart: {
       type: 'column'
@@ -12,12 +14,12 @@ function ThreatProliferation() {
     enabled: false
   }, 
     title: {
-      text: "Threat Proliferation"
+      text: "Top Vendors"
     },
     xAxis: {
       categories: [],
       title: {
-          text: "Date"
+          text: "Vendors"
       }
   },
   plotOptions: {
@@ -42,14 +44,14 @@ function ThreatProliferation() {
   const [yAxisData, setyAxisData] = useState(null)
 
   useEffect(() => {
-    fetch(window.host + "/api/v1.0/threat_proliferation")
+    fetch(window.host + "/api/v1.0/top_vendors")
      .then((response) => response.json())
      .then((data) => {
       const xAxis=[];
       const yAxis=[];
       for (let i = 0; i < data.length; i++) {
         xAxis.push(data[i].count)
-        yAxis.push(data[i].date)
+        yAxis.push(data[i].vendor)
        
     } 
     setxAxisData(xAxis);
@@ -57,7 +59,7 @@ function ThreatProliferation() {
     setOptions({ xAxis: {
       categories: yAxis,
       title: {
-          text: "Date"
+          text: "Vendors"
       }
   }, series: [{ data: xAxis}] });
     
@@ -65,18 +67,22 @@ function ThreatProliferation() {
     })
     
   },[]);
-  
   return (
-    <div> 
-    <Navbar></Navbar>
-    <div style={{ }}>
+    <div>
+      <Navbar></Navbar>
+      <div style={{ marginTop:'24%' }}>
+      <NavbarTop></NavbarTop>
+      <div style={{ }}>
      <HighchartsReact
       highcharts={Highcharts}
       options={options}
       />
       </div>
-  </div>
+      </div>
+      </div>
+    
+    
   );
 };
   
-export default ThreatProliferation;
+export default VendorsSection;

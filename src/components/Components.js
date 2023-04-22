@@ -1,4 +1,6 @@
  import styled from 'styled-components';
+ import Spinner from "react-bootstrap/Spinner";
+ import React from "react";
 
  export const Container = styled.div`
  background-color: #fff;
@@ -10,6 +12,16 @@
  max-width: 100%;
  min-height: 500px;
  `;
+
+ export const LoadingSpinner =() => {
+  return (
+   <div className="w-100 h-100 d-flex flex-column justify-content-center">
+    <div className="w-100 d-flex justify-content-center">
+     <Spinner animation="border" role="status" variant="warning"/>
+    </div>
+   </div>
+  )
+ }
 
  export const SignUpContainer = styled.div`
   position: absolute;
@@ -67,8 +79,8 @@
 
  export const Button = styled.button`
     border-radius: 20px;
-    border: 1px solid #ffb82b;
-    background-color: #ffb82b;
+    border: 1px solid #009bb0;
+    background-color: #009bb0;
     color: #ffffff;
     font-size: 14px;
     font-weight: bold;
@@ -109,8 +121,8 @@ ${props =>
 
 export const Overlay = styled.div`
 background: #ff416c;
-background: -webkit-linear-gradient(to right, #ffb82b, #ffce2b);
-background: linear-gradient(to right, #ffb82b, #ffce2b);
+background: -webkit-linear-gradient(to right, #008394, #009bb0);
+background: linear-gradient(to right, #008394, #009bb0);
 background-repeat: no-repeat;
 background-size: cover;
 background-position: 0 0;

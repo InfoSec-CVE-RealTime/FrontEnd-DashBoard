@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "./Navbar";
-import NavbarTop from "./NavbarTop";
+import Navbar from "../Navbar";
+import NavbarTop from "../NavbarTop";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useState, useEffect } from 'react';
 
-
-function VendorsSection() {
+  
+function ProductsSection() {
   const [options, setOptions] = useState({
     chart: {
       type: 'column'
@@ -14,12 +14,12 @@ function VendorsSection() {
     enabled: false
   }, 
     title: {
-      text: "Top Vendors"
+      text: "Top Products"
     },
     xAxis: {
       categories: [],
       title: {
-          text: "Vendors"
+          text: "Product"
       }
   },
   plotOptions: {
@@ -29,7 +29,7 @@ function VendorsSection() {
 },
   yAxis: {
     title: {
-        text: 'Count',
+        text: 'Counts',
     },
     labels: {
         overflow: 'justify'
@@ -44,14 +44,14 @@ function VendorsSection() {
   const [yAxisData, setyAxisData] = useState(null)
 
   useEffect(() => {
-    fetch(window.host + "/api/v1.0/top_vendors")
+    fetch(window.host + "/api/v1.0/top_products")
      .then((response) => response.json())
      .then((data) => {
       const xAxis=[];
       const yAxis=[];
       for (let i = 0; i < data.length; i++) {
         xAxis.push(data[i].count)
-        yAxis.push(data[i].vendor)
+        yAxis.push(data[i].product)
        
     } 
     setxAxisData(xAxis);
@@ -59,7 +59,7 @@ function VendorsSection() {
     setOptions({ xAxis: {
       categories: yAxis,
       title: {
-          text: "Vendors"
+          text: "Products"
       }
   }, series: [{ data: xAxis}] });
     
@@ -67,10 +67,12 @@ function VendorsSection() {
     })
     
   },[]);
+  
   return (
+    
     <div>
-      <Navbar></Navbar>
-      <div style={{ marginTop:'24%' }}>
+      <Navbar style={{ marginTop:'-15% !important'}}></Navbar>
+      <div style={{ marginTop:'24%'}}>
       <NavbarTop></NavbarTop>
       <div style={{ }}>
      <HighchartsReact
@@ -78,11 +80,10 @@ function VendorsSection() {
       options={options}
       />
       </div>
-      </div>
-      </div>
-    
-    
+     </div>
+    </div> 
+       
   );
 };
   
-export default VendorsSection;
+export default ProductsSection;

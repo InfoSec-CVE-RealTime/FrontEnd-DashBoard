@@ -7,7 +7,7 @@
 }
 
 body {
-  background: #f6f5f7;
+  background: #f8f8f8 !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,10 +22,32 @@ body {
     margin-top: 20px;
     padding: 7px 7px 7px 7px;
     margin-left:18%;
-    color: #ffca2b;
-    border: 2px solid #ffca2b;
+    color: #009bb0;
+    border: 2px solid #009bb0;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+.main-window {
+    height: 100%;
+    width: 100%;
+}
+
+.text-selected {
+    color: #009bb0 !important;
+}
+
+.content-box {
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #e1e8ee;
+    box-shadow: 0 1px 3px rgba(0,0,0,.13);
+    padding: 10px;
 }
