@@ -5,7 +5,6 @@ import "../styles.css";
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
-const FLASK_SERVER_IP = "http://127.0.0.1:5000";
 const REDIRECT_URL = "/dashboard";
 
 const SignIn = () => {
@@ -52,7 +51,7 @@ const SignIn = () => {
     };
 
     axios
-      .post(FLASK_SERVER_IP + "/api/v1.0/signup", userData)
+      .post(window.host + "/api/v1.0/signup", userData)
       .then((response) => {
         console.log(response.data);
         // handle response data here
@@ -75,7 +74,7 @@ const SignIn = () => {
 
     try {
       const response = await axios.post(
-        `${FLASK_SERVER_IP}/api/v1.0/login`,
+        `${window.host}/api/v1.0/login`,
         userData
       );
       console.log(response);
@@ -94,7 +93,7 @@ const SignIn = () => {
   useEffect(() => {
     if (localStorage.getItem("user_id")) {
       setLoading(true);
-      axios.post(`${FLASK_SERVER_IP}/api/v1.0/user_session`, {
+      axios.post(window.host + `/api/v1.0/user_session`, {
         user_id: localStorage.getItem("user_id"),
       }).then((response) => {
         if (response.status === 200) {

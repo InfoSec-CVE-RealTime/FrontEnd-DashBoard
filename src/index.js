@@ -13,7 +13,10 @@ import ProductsSection from './components/pages/ProductsSection';
 import Dashboard from './components/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+if(process.env.NODE_ENV === 'development')
+  window.host = "http://localhost:5000";
+else
+  window.host = "";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
