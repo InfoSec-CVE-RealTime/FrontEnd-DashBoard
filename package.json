@@ -13,6 +13,7 @@
     "browserify-zlib": "^0.2.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "highcharts": "^10.3.3",
     "highcharts-react-official": "^3.2.0",
     "on-finished": "^2.4.1",
     "path-browserify": "^1.0.1",

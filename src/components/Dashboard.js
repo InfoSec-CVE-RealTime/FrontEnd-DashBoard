@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import {Nav, NavTitle, NavLink, SubscriptionNav, SubscriptionButton} from './NavbarElements';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {LoadingSpinner} from "./Components";
+import TopVulnerabilities from "./pages/TopVulnerabilities";
 
 const FLASK_SERVER_IP = "http://127.0.0.1:5000";
 
@@ -54,7 +54,7 @@ function Dashboard() {
       <Container className="main-window pt-5 pb-5">
         <Row>
           <Col xs={9}>
-            <LoadingSpinner />
+            {activePage === "TopVulnerabilities" && <TopVulnerabilities/>}
           </Col>
           <Col xs={3}>
             <Nav>

@@ -7,7 +7,7 @@ export const Nav = styled.nav`
   width: 100%;
   padding: 5px 8px;
   border-radius: 5px;
-  border: 1px solid #d0d0d0;
+  border: 1px solid #e1e8ee;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
 `;
 export const NavTitle = styled.h1`
@@ -19,7 +19,7 @@ export const NavTitle = styled.h1`
   margin-top: 5px;
   border-bottom: 2px solid #e0e0e0;
   padding-bottom: 8px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 `;
 
 export const NavLink = styled.div`
