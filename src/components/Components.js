@@ -1,4 +1,6 @@
  import styled from 'styled-components';
+ import Spinner from "react-bootstrap/Spinner";
+ import React from "react";
 
  export const Container = styled.div`
  background-color: #fff;
@@ -10,6 +12,16 @@
  max-width: 100%;
  min-height: 500px;
  `;
+
+ export const LoadingSpinner =() => {
+  return (
+   <div className="w-100 h-100 d-flex flex-column justify-content-center">
+    <div className="w-100 d-flex justify-content-center">
+     <Spinner animation="border" role="status" variant="warning"/>
+    </div>
+   </div>
+  )
+ }
 
  export const SignUpContainer = styled.div`
   position: absolute;

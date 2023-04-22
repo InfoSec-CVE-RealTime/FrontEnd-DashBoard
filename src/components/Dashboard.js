@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import {Nav, NavTitle, NavLink, SubscriptionNav, SubscriptionButton} from './NavbarElements';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {LoadingSpinner} from "./Components";
 
 const FLASK_SERVER_IP = "http://127.0.0.1:5000";
 
@@ -19,7 +20,7 @@ function Dashboard() {
     axios.post(FLASK_SERVER_IP + "/api/v1.0/user_session", {
       "user_id": localStorage.getItem("user_id")
     }).then((response) => {
-      if (response.status !== 400) {
+      if (response.status === 200) {
         setAccountInfo(response.data.user);
       } else {
         localStorage.removeItem("user_id");
@@ -33,13 +34,27 @@ function Dashboard() {
     navigate("/");
   }
 
+  function setSubscription(subscribe) {
+    axios.post(FLASK_SERVER_IP + "/api/v1.0/set_subscription", {
+      "user_id": localStorage.getItem("user_id"),
+      "subscribe": subscribe
+    }).then((response) => {
+      if (response.status === 200) {
+        setAccountInfo(response.data.user);
+      } else {
+        localStorage.removeItem("user_id");
+        navigate("/");
+      }
+    });
+  }
+
   return (
     <main>
       <TitleBar/>
       <Container className="main-window pt-5 pb-5">
         <Row>
           <Col xs={9}>
-
+            <LoadingSpinner />
           </Col>
           <Col xs={3}>
             <Nav>
@@ -56,13 +71,21 @@ function Dashboard() {
               <NavTitle>Account</NavTitle>
               <h5 className="mb-0 mt-2"><b>{accountInfo.name}</b></h5>
               <div>{accountInfo.email}</div>
-              <NavLink onClick={signOut} activeStyle className="border-bottom-0">Sign Out</NavLink>
+              <NavLink onClick={signOut} activeStyle className="border-bottom-0 text-end">Sign Out</NavLink>
             </Nav>
-            <SubscriptionNav className="mt-3 text-center">
-              <h5><b>Subscription</b></h5>
-              <div>Subscribe to our email list to get notified of new vulnerabilities as they are discovered.</div>
-              <SubscriptionButton className="mt-2 mb-2">Subscribe</SubscriptionButton>
-            </SubscriptionNav>
+            {accountInfo.subscribed ? (
+                <Nav className="mt-3 text-center">
+                  <NavTitle>Subscription</NavTitle>
+                  <div className="mt-3 text-center">You are subscribed to our email list.</div>
+                  <SubscriptionButton className="mt-2 mb-2" onClick={() => setSubscription(false)}>Unsubscribe</SubscriptionButton>
+                </Nav>
+              ) : (
+                <SubscriptionNav className="mt-3 text-center">
+                  <h5><b>Subscription</b></h5>
+                  <div>Subscribe to our email list to get notified of new vulnerabilities as they are discovered.</div>
+                  <SubscriptionButton className="mt-2 mb-2" onClick={() => setSubscription(true)}>Subscribe</SubscriptionButton>
+                </SubscriptionNav>
+              )}
           </Col>
         </Row>
       </Container>

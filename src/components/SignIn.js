@@ -80,7 +80,7 @@ const SignIn = () => {
       );
       console.log(response);
 
-      if (response.status !== 400) {
+      if (response.status === 200) {
         localStorage.setItem("user_id", response.data.user_id);
         setSignIn(false);
         navigate(REDIRECT_URL);
@@ -97,7 +97,7 @@ const SignIn = () => {
       axios.post(`${FLASK_SERVER_IP}/api/v1.0/user_session`, {
         user_id: localStorage.getItem("user_id"),
       }).then((response) => {
-        if (response.status !== 400) {
+        if (response.status === 200) {
           setSignIn(false);
           navigate(REDIRECT_URL);
         } else {
@@ -116,84 +116,86 @@ const SignIn = () => {
       {loading ? (
         <Spinner animation="border" role="status" variant="warning" />
       ) : (
-        <>
-          <Components.Container>
-            <Components.SignUpContainer signinIn={signIn}>
-              <Components.Form>
-                <Components.Title>Create Account</Components.Title>
-                <Components.Input
-                  type="text"
-                  id="name"
-                  placeholder="Name"
-                  onChange={handleNameChange}
-                />
-                <Components.Input
-                  type="email"
-                  id="email"
-                  placeholder="Email"
-                  onChange={handleEmailChange}
-                />
-                <Components.Input
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  onChange={handlePasswordChange}
-                />
-                <Components.Input
-                  type="password"
-                  id="confirmPassword"
-                  placeholder="Confirm Password"
-                  onChange={handleConfirmPasswordChange}
-                />
-                <Components.Button onClick={callApiSignUP}>Sign Up</Components.Button>
-              </Components.Form>
-            </Components.SignUpContainer>
+        <div className="h-100 w-100 d-flex flex-column justify-content-center">
+          <div className="w-100 d-flex justify-content-center">
+            <Components.Container>
+              <Components.SignUpContainer signinIn={signIn}>
+                <Components.Form>
+                  <Components.Title>Create Account</Components.Title>
+                  <Components.Input
+                    type="text"
+                    id="name"
+                    placeholder="Name"
+                    onChange={handleNameChange}
+                  />
+                  <Components.Input
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    onChange={handleEmailChange}
+                  />
+                  <Components.Input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    onChange={handlePasswordChange}
+                  />
+                  <Components.Input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    onChange={handleConfirmPasswordChange}
+                  />
+                  <Components.Button onClick={callApiSignUP}>Sign Up</Components.Button>
+                </Components.Form>
+              </Components.SignUpContainer>
 
-            <Components.SignInContainer signinIn={signIn}>
-              <Components.Form>
-                <Components.Title>Sign in</Components.Title>
-                <Components.Input
-                  type="email"
-                  id="email"
-                  placeholder="Email"
-                  onChange={handleEmailChange}
-                />
-                <Components.Input
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  onChange={handlePasswordChange}
-                />
-                <Components.Anchor href="#">Forgot your password?</Components.Anchor>
-                <Components.Button onClick={callApiSignIn}>Sign In</Components.Button>
-              </Components.Form>
-            </Components.SignInContainer>
+              <Components.SignInContainer signinIn={signIn}>
+                <Components.Form>
+                  <Components.Title>Sign in</Components.Title>
+                  <Components.Input
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    onChange={handleEmailChange}
+                  />
+                  <Components.Input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    onChange={handlePasswordChange}
+                  />
+                  <Components.Anchor href="#">Forgot your password?</Components.Anchor>
+                  <Components.Button onClick={callApiSignIn}>Sign In</Components.Button>
+                </Components.Form>
+              </Components.SignInContainer>
 
-            <Components.OverlayContainer signinIn={signIn}>
-              <Components.Overlay signinIn={signIn}>
-                <Components.LeftOverlayPanel signinIn={signIn}>
-                  <Components.Title>Welcome Back!</Components.Title>
-                  <Components.Paragraph>
-                    To keep connected with us please login with your personal info
-                  </Components.Paragraph>
-                  <Components.GhostButton onClick={() => toggleIsSignIn(true)}>
-                    Sign In
-                  </Components.GhostButton>
-                </Components.LeftOverlayPanel>
+              <Components.OverlayContainer signinIn={signIn}>
+                <Components.Overlay signinIn={signIn}>
+                  <Components.LeftOverlayPanel signinIn={signIn}>
+                    <Components.Title>Welcome Back!</Components.Title>
+                    <Components.Paragraph>
+                      To keep connected with us please login with your personal info
+                    </Components.Paragraph>
+                    <Components.GhostButton onClick={() => toggleIsSignIn(true)}>
+                      Sign In
+                    </Components.GhostButton>
+                  </Components.LeftOverlayPanel>
 
-                <Components.RightOverlayPanel signinIn={signIn}>
-                  <Components.Title>Hello, Friend!</Components.Title>
-                  <Components.Paragraph>
-                    Enter Your personal details and start journey with us
-                  </Components.Paragraph>
-                  <Components.GhostButton onClick={() => toggleIsSignIn(false)}>
-                    Sign Up
-                  </Components.GhostButton>
-                </Components.RightOverlayPanel>
-              </Components.Overlay>
-            </Components.OverlayContainer>
-          </Components.Container>
-        </>
+                  <Components.RightOverlayPanel signinIn={signIn}>
+                    <Components.Title>Hello, Friend!</Components.Title>
+                    <Components.Paragraph>
+                      Enter Your personal details and start journey with us
+                    </Components.Paragraph>
+                    <Components.GhostButton onClick={() => toggleIsSignIn(false)}>
+                      Sign Up
+                    </Components.GhostButton>
+                  </Components.RightOverlayPanel>
+                </Components.Overlay>
+              </Components.OverlayContainer>
+            </Components.Container>
+          </div>
+        </div>
       )}
     </>
   );

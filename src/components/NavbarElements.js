@@ -54,7 +54,7 @@ export const SubscriptionNav = styled.div`
 
 export const SubscriptionButton = styled.button`
   border-radius: 20px;
-  border: 1px solid #fff;
+  border: 1px solid #ffb82b;
   background-color: #fff;
   color: #ffb82b;
   font-size: 14px;
