@@ -17,7 +17,7 @@
   return (
    <div className="w-100 h-100 d-flex flex-column justify-content-center">
     <div className="w-100 d-flex justify-content-center">
-     <Spinner animation="border" role="status" variant="warning"/>
+     <Spinner animation="border" role="status" variant="info"/>
     </div>
    </div>
   )
