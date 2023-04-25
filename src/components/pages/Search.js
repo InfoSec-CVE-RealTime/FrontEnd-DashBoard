@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import {Nav, NavTitle} from '../NavbarElements';
 import {LoadingSpinner} from "../Components";
 import axios from "axios";
@@ -34,30 +35,43 @@ function Clustering(props) {
       let items = searchItems(search);
       setItems(items);
     }
-  }, [search]);
+  }, [search, selectedItems]);
 
   const searchItems = (val) => {
     let words = val.split(" ");
     let rankedItems = [];
     availableItems.forEach((item) => {
-      let rank = 0;
-      let item_name = item.toLowerCase();
-      words.forEach((word) => {
-        let index = item_name.indexOf(word.toLowerCase());
-        if (index > -1) {
-          rank += 1 + index;
+      if (!item_is_selected(item)) {
+        let rank = 0;
+        let item_name = item.toLowerCase();
+        let ranked = false;
+        words.forEach((word) => {
+          let index = item_name.indexOf(word.toLowerCase());
+          if (index > -1 && word !== "") {
+            rank += 20 - index + word.length;
+            ranked = true;
+          }
+        });
+        if (ranked) {
+          rankedItems.push({item: item, rank: rank});
         }
-      });
-      if (rank > 0) {
-        rankedItems.push({item: item, rank: rank});
       }
     });
     rankedItems.sort((a, b) => {
-      return a.rank - b.rank;
+      return b.rank - a.rank;
     });
     return rankedItems.slice(0, 100).map((item) => {
       return {item: item.item, label: prettify(item.item)};
     });
+  }
+
+  const item_is_selected = (item) => {
+    for (let i = 0; i < selectedItems.length; i++) {
+      if (selectedItems[i].item === item) {
+        return true;
+      }
+    }
+    return false;
   }
 
   const prettify = (item) => {
@@ -73,14 +87,14 @@ function Clustering(props) {
   const get_highlighted_item = (item, search) => {
     // return the item, but with the search terms bolded
     let words = search.split(" ");
-    let item_name = item.toLowerCase();
+    let highlighted = item;
     words.forEach((word) => {
-      let index = item_name.indexOf(word.toLowerCase());
-      if (index > -1) {
-        item = item.substring(0, index) + "<b>" + item.substring(index, index + word.length) + "</b>" + item.substring(index + word.length);
+      let index = highlighted.toLowerCase().indexOf(word.toLowerCase());
+      if (index > -1 && word !== "") {
+        highlighted = highlighted.substring(0, index) + "<b>" + highlighted.substring(index, index + word.length) + "</b>" + highlighted.substring(index + word.length);
       }
     });
-    return <span dangerouslySetInnerHTML={{__html: item}}></span>;
+    return <span dangerouslySetInnerHTML={{__html: highlighted}}/>;
   }
 
   const select_item = (item) => {
@@ -89,6 +103,11 @@ function Clustering(props) {
 
   const deselect_item = (item) => {
     setSelectedItems(prevState => prevState.filter((i) => i !== item));
+  }
+
+  const reset_search_input = () => {
+    setSearch("");
+    document.getElementById("searchInput").value = "";
   }
 
   useEffect(() => {
@@ -119,13 +138,16 @@ function Clustering(props) {
 
           <Row>
             <Col xs={4}>
-              <input className="search-input mt-2" placeholder="Search" onChange={handleSearch}></input>
+              <input id="searchInput" className="search-input mt-2" placeholder="Search" onChange={handleSearch}></input>
               {search && (
-                <div className="content-box search-results mt-2">
-                  {items.map((item) => (
-                    <div className="search-result" onClick={() => select_item(item)}>{get_highlighted_item(item.label, search)}</div>
-                  ))}
-                </div>
+                <>
+                  <Button variant="outline-secondary" className="w-100 mt-1" onClick={reset_search_input}>Clear</Button>
+                  <div className="content-box search-results mt-2">
+                    {items.map((item) => (
+                      <div className="search-result" onClick={() => select_item(item)}>{get_highlighted_item(item.label, search)}</div>
+                    ))}
+                  </div>
+                </>
               )}
               <Nav className="mt-2 pb-2">
                 <NavTitle>Selected {text}</NavTitle>
