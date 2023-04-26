@@ -5,6 +5,31 @@ import Button from "react-bootstrap/Button";
 import {Nav, NavTitle} from '../NavbarElements';
 import {LoadingSpinner} from "../Components";
 import axios from "axios";
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
+
+const COLORS = [
+  "hsl(0, 100%, 40%)",
+  "hsl(30, 100%, 40%)",
+  "hsl(60, 100%, 40%)",
+  "hsl(90, 100%, 40%)",
+  "hsl(120, 100%, 40%)",
+  "hsl(150, 100%, 40%)",
+  "hsl(180, 100%, 40%)",
+  "hsl(210, 100%, 40%)",
+  "hsl(240, 100%, 40%)",
+  "hsl(270, 100%, 40%)",
+  "hsl(300, 100%, 40%)",
+  "hsl(330, 100%, 40%)"
+]
+
+function getColors(numColors) {
+  let colors = [];
+  for (let i = 0; i < numColors; i++) {
+    colors.push(COLORS[i % COLORS.length]);
+  }
+  return colors;
+}
 
 function Clustering(props) {
   const text = props.is_vendors ? "Vendors" : "Products";
@@ -14,7 +39,7 @@ function Clustering(props) {
   const [search, setSearch] = useState("");
   const [items, setItems] = useState([]);
   const [availableItems, setAvailableItems] = useState([]);
-  const [selectedItems, setSelectedItems] = useState("");
+  const [selectedItems, setSelectedItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   let [value, setValue] = useState('one');
@@ -114,13 +139,102 @@ function Clustering(props) {
     let t = setTimeout(() => {
       axios.get(window.host + get_items_url).then((response) => {
         if (response.status === 200) {
-          setAvailableItems(response.data);
+          setAvailableItems(response.data.items);
+          if (response.data.top_items) {
+            setSelectedItems(response.data.top_items.map((item) => {
+              return {item: item, label: prettify(item)};
+            }));
+          }
           setLoading(false);
         }
       });
     }, 100);
     return () => clearTimeout(t);
   }, []);
+
+  const [options, setOptions] = useState({
+    chart: {
+      type: 'line'
+    }, legend: {
+      enabled: false
+    },
+    title: {
+      text: ""
+    },
+    xAxis: {
+      categories: [],
+      title: {
+        text: "Date"
+      }
+    },
+    plotOptions: {
+      series: {
+        color: '#009bb0'
+      }
+    },
+    yAxis: {
+      title: {
+        text: 'Count',
+      },
+      labels: {
+        overflow: 'justify'
+      },
+
+    },
+    series: [{data: []}]
+  });
+
+  useEffect(() => {
+    let cancel = false;
+
+    axios.get(window.host + get_data_url, {params: {items: selectedItems.map(item => item.item).join(",")}}).then((response) => {
+      if (response.status === 200 && !cancel) {
+        let xAxis = [];
+        let series = {};
+        for (let i= 0; i < response.data.length; i++) {
+          for (const [key, value] of Object.entries(response.data[i])) {
+            if (key !== "date") {
+              if (series[key] === undefined) {
+                series[key] = [];
+              }
+              series[key].push(value);
+            } else {
+              xAxis.push(value);
+            }
+          }
+        }
+
+        let clean_series = [];
+        let colors = getColors(series.length)
+        for (const [key, value] of Object.entries(series)) {
+          let color = colors.pop();
+          clean_series.push({name: prettify(key), data: value, color: color});
+        }
+
+        setOptions({
+          xAxis: {
+            categories: xAxis,
+            title: {
+              text: "Date"
+            }
+          },
+          series: clean_series,
+          title: {
+            text: ""
+          },
+          yAxis: {
+            title: {
+              text: 'Vulnerability Count',
+            }
+          }
+        });
+      }
+    });
+
+    return () => {
+      cancel = true
+    };
+  }, [selectedItems]);
 
   return (
     <>
@@ -129,11 +243,11 @@ function Clustering(props) {
           <div className="d-flex justify-content-between">
             <h2 className="text-selected d-flex flex-column justify-content-end">Search {text}</h2>
 
-            <select className="dropdown" value={value} onChange={handleChange}>
-              {optionsOne.map((optionOne) => (
-                <option value={optionOne.value}>{optionOne.label}</option>
-              ))}
-            </select>
+            {/*<select className="dropdown" value={value} onChange={handleChange}>*/}
+            {/*  {optionsOne.map((optionOne) => (*/}
+            {/*    <option value={optionOne.value}>{optionOne.label}</option>*/}
+            {/*  ))}*/}
+            {/*</select>*/}
           </div>
 
           <Row>
@@ -165,7 +279,10 @@ function Clustering(props) {
             </Col>
             <Col xs={8}>
               <div className="content-box mt-2 pt-4">
-
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={options}
+                />
               </div>
             </Col>
           </Row>
