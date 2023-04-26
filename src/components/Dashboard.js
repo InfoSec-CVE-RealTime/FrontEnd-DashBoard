@@ -64,12 +64,12 @@ function Dashboard() {
             {activePage === "TopVulnerabilities" && <TopVulnerabilities/>}
             {activePage === "ThreatProliferation" && <ThreatProliferation/>}
             {activePage === "ImpactOverTheYears" && <ImpactOverTheYears/>}
-            {activePage === "ThreatsChangedOverTime" && <ThreatsChangedOverTime/>}
+            {activePage === "ThreatsChangedOverTime" && <Search collection_type={"cwes"}/>}
             {activePage === "Clustering" && <Clustering/>}
             {activePage === "VendorsSection" && <VendorsSection/>}
             {activePage === "ProductsSection" && <ProductsSection/>}
-            {activePage === "SearchVendors" && <Search is_vendors={true}/>}
-            {activePage === "SearchProducts" && <Search is_vendors={false}/>}
+            {activePage === "SearchVendors" && <Search collection_type={"vendors"}/>}
+            {activePage === "SearchProducts" && <Search collection_type={"products"}/>}
           </Col>
           <Col xs={3}>
             <Nav>
@@ -77,7 +77,7 @@ function Dashboard() {
               <NavLink onClick={() => setActivePage("ThreatProliferation")} activeStyle className={activePage === "ThreatProliferation" ? "text-selected" : ""}>Threat Proliferation</NavLink>
               <NavLink onClick={() => setActivePage("TopVulnerabilities")} activeStyle className={activePage === "TopVulnerabilities" ? "text-selected" : ""}>Top Vulnerabilities</NavLink>
               <NavLink onClick={() => setActivePage("ImpactOverTheYears")} activeStyle className={activePage === "ImpactOverTheYears" ? "text-selected" : ""}>Impact Over The Years</NavLink>
-              <NavLink onClick={() => setActivePage("ThreatsChangedOverTime")} activeStyle className={activePage === "ThreatsChangedOverTime" ? "text-selected" : ""}>How Threats Have Changed Over Time</NavLink>
+              <NavLink onClick={() => setActivePage("ThreatsChangedOverTime")} activeStyle className={activePage === "ThreatsChangedOverTime" ? "text-selected" : ""}>Threats Over Time</NavLink>
               <NavLink onClick={() => setActivePage("Clustering")} activeStyle className={activePage === "Clustering" ? "text-selected" : ""}>Clustering</NavLink>
               <NavLink onClick={() => setActivePage("VendorsSection")} activeStyle className={activePage === "VendorsSection" ? "text-selected" : ""}>Top Vendors</NavLink>
               <NavLink onClick={() => setActivePage("ProductsSection")} activeStyle className={activePage === "ProductsSection" ? "text-selected" : ""}>Top Products</NavLink>

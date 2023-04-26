@@ -31,10 +31,31 @@ function getColors(numColors) {
   return colors;
 }
 
-function Clustering(props) {
-  const text = props.is_vendors ? "Vendors" : "Products";
-  const get_items_url = props.is_vendors ? "/api/v1.0/get_vendors" : "/api/v1.0/get_products";
-  const get_data_url = props.is_vendors ? "/api/v1.0/vendor_history" : "/api/v1.0/product_history";
+const COLLECTION_TYPE_INFO = {
+  "vendors": {
+    text: "Vendors",
+    get_items_url: "/api/v1.0/get_vendors",
+    get_data_url: "/api/v1.0/vendor_history",
+  },
+  "products": {
+    text: "Products",
+    get_items_url: "/api/v1.0/get_products",
+    get_data_url: "/api/v1.0/product_history",
+  },
+  "cwes": {
+    text: "Vulnerability Types",
+    get_items_url: "/api/v1.0/vulnerability_types",
+    get_data_url: "/api/v1.0/vulnerability_type_history",
+  }
+}
+
+function Search(props) {
+  // const text = props.is_vendors ? "Vendors" : "Products";
+  // const get_items_url = props.is_vendors ? "/api/v1.0/get_vendors" : "/api/v1.0/get_products";
+  // const get_data_url = props.is_vendors ? "/api/v1.0/vendor_history" : "/api/v1.0/product_history";
+  const text = COLLECTION_TYPE_INFO[props.collection_type].text;
+  const get_items_url = COLLECTION_TYPE_INFO[props.collection_type].get_items_url;
+  const get_data_url = COLLECTION_TYPE_INFO[props.collection_type].get_data_url;
 
   const [search, setSearch] = useState("");
   const [items, setItems] = useState([]);
@@ -159,7 +180,7 @@ function Clustering(props) {
       enabled: false
     },
     title: {
-      text: ""
+      text: `Vulnerability Count Over Time by ${text}`
     },
     xAxis: {
       categories: [],
@@ -220,7 +241,7 @@ function Clustering(props) {
           },
           series: clean_series,
           title: {
-            text: ""
+            text: `Vulnerability Count Over Time by ${text}`
           },
           yAxis: {
             title: {
@@ -292,4 +313,4 @@ function Clustering(props) {
   );
 }
 
-export default Clustering;
+export default Search;
