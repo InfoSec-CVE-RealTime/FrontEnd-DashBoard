@@ -30,13 +30,6 @@ function TopVulnerabilities() {
       setTopVulnerabilities(data)
       setLoading(false)
     })
-    // fetch(window.host + "/api/v1.0/top_cves")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //
-    //
-    //
-    //   })
 
     return () => {
       cancel = true;

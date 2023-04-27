@@ -74,7 +74,7 @@ function Dashboard() {
           <Col xs={3}>
             <Nav>
               <NavTitle>Pages</NavTitle>
-              <NavLink onClick={() => setActivePage("ThreatProliferation")} activeStyle className={activePage === "ThreatProliferation" ? "text-selected" : ""}>Threat Proliferation</NavLink>
+              <NavLink onClick={() => setActivePage("ThreatProliferation")} activeStyle className={activePage === "ThreatProliferation" ? "text-selected" : ""}>Total Threats Over Time</NavLink>
               <NavLink onClick={() => setActivePage("SearchVendors")} activeStyle className={activePage === "SearchVendors" ? "text-selected" : ""}>Search Vendors</NavLink>
               <NavLink onClick={() => setActivePage("SearchProducts")} activeStyle className={activePage === "SearchProducts" ? "text-selected" : ""}>Search Products</NavLink>
               <NavLink onClick={() => setActivePage("ThreatsChangedOverTime")} activeStyle className={activePage === "ThreatsChangedOverTime" ? "text-selected" : ""}>Search Vulnerability Types</NavLink>

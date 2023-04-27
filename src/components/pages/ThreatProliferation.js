@@ -2,11 +2,16 @@ import React from "react";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useState, useEffect } from 'react';
+import axios from "axios";
   
 function ThreatProliferation() {
   const [value, setValue] = React.useState('fruit');
   const optionsOne = [
     {label: 'All Time', value: 'all'},
+    {label: 'Last Year', value: '1y'},
+    {label: 'Last 3 Years', value: '3y'},
+    {label: 'Last 5 Years', value: '5y'},
+    {label: 'Last 10 Years', value: '10y'}
   ];
 
   const handleChange = (event) => {
@@ -49,10 +54,9 @@ function ThreatProliferation() {
 
   useEffect(() => {
     let cancel = false;
-    fetch(window.host + "/api/v1.0/threat_proliferation")
-      .then((response) => response.json())
-      .then((data) => {
+    axios.get(window.host + "/api/v1.0/threat_proliferation", {params: {duration: value}}).then((response) => {
         if (cancel) return;
+        let data = response.data;
         const xAxis=[];
         const yAxis=[];
         for (let i = 0; i < data.length; i++) {
@@ -74,7 +78,7 @@ function ThreatProliferation() {
       cancel = true
     };
     
-  },[]);
+  },[value]);
   
   return (
     <div>
