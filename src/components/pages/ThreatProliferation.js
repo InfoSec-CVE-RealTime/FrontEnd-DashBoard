@@ -16,68 +16,70 @@ function ThreatProliferation() {
   const [options, setOptions] = useState({
     chart: {
       type: 'line'
-  },legend: {
-    enabled: false
-  }, 
+    }, legend: {
+      enabled: false
+    },
     title: {
       text: ""
     },
     xAxis: {
       categories: [],
       title: {
-          text: "Date"
+        text: "Date"
       }
-  },
-  plotOptions: {
-    series: {
+    },
+    plotOptions: {
+      series: {
         color: '#009bb0'
-    }
-},
-  yAxis: {
-    title: {
-        text: 'Count',
+      }
     },
-    labels: {
+    yAxis: {
+      title: {
+        text: 'Vulnerability Count',
+      },
+      labels: {
         overflow: 'justify'
+      },
+
     },
-   
-},
-    series: [{ data: [] }]
+    series: [{data: []}]
   });
 
 
-  const [xAxisData, setxAxisData] = useState(null)
-  const [yAxisData, setyAxisData] = useState(null)
 
   useEffect(() => {
+    let cancel = false;
     fetch(window.host + "/api/v1.0/threat_proliferation")
-     .then((response) => response.json())
-     .then((data) => {
-      const xAxis=[];
-      const yAxis=[];
-      for (let i = 0; i < data.length; i++) {
-        xAxis.push(data[i].count)
-        yAxis.push(data[i].date)
-       
-    } 
-    setxAxisData(xAxis);
-    setyAxisData(yAxis);
-    setOptions({ xAxis: {
-      categories: yAxis,
-      title: {
-          text: "Date"
-      }
-  }, series: [{ data: xAxis}] });
-    
+      .then((response) => response.json())
+      .then((data) => {
+        if (cancel) return;
+        const xAxis=[];
+        const yAxis=[];
+        for (let i = 0; i < data.length; i++) {
+          yAxis.push(data[i].count)
+          xAxis.push(data[i].date)
 
-    })
+        }
+        setOptions({ xAxis: {
+          categories: xAxis,
+          title: {
+              text: "Date"
+          }
+        }, series: [{ data: yAxis}] });
+
+
+      })
+
+    return () => {
+      cancel = true
+    };
     
   },[]);
   
   return (
     <div>
       <div className="d-flex justify-content-between">
-        <h2 className="text-selected d-flex flex-column justify-content-end">Threat Proliferation</h2>
+        <h2 className="text-selected d-flex flex-column justify-content-end">Total Threats Over Time</h2>
 
         <select className="dropdown" value={value} onChange={handleChange}>
           {optionsOne.map((optionOne) => (

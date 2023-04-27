@@ -61,13 +61,12 @@ function TopVulnerabilities() {
   });
 
 
-  const [xAxisData, setxAxisData] = useState(null)
-  const [yAxisData, setyAxisData] = useState(null)
-
   useEffect(() => {
+    let cancel = false;
     fetch(window.host + "/api/v1.0/top_cves")
       .then((response) => response.json())
       .then((data) => {
+        if (cancel) return;
         const xAxis = [];
         const yAxis = [];
         for (let i = 0; i < data.length; i++) {
@@ -75,8 +74,6 @@ function TopVulnerabilities() {
           yAxis.push(data[i].cve_id)
 
         }
-        setxAxisData(xAxis);
-        setyAxisData(yAxis);
         setOptions({
           xAxis: {
             categories: yAxis,
@@ -88,6 +85,10 @@ function TopVulnerabilities() {
 
 
       })
+
+    return () => {
+      cancel = true;
+    }
 
   }, []);
   return (

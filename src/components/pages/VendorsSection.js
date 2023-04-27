@@ -27,61 +27,61 @@ function VendorsSection() {
   const [options, setOptions] = useState({
     chart: {
       type: 'column'
-  },legend: {
-    enabled: false
-  }, 
+    }, legend: {
+      enabled: false
+    },
     title: {
       text: ""
     },
     xAxis: {
       categories: [],
       title: {
-          text: "Vendors"
+        text: "Vendors"
       }
-  },
-  plotOptions: {
-    series: {
+    },
+    plotOptions: {
+      series: {
         color: '#009bb0'
-    }
-},
-  yAxis: {
-    title: {
+      }
+    },
+    yAxis: {
+      title: {
         text: 'Count',
-    },
-    labels: {
+      },
+      labels: {
         overflow: 'justify'
+      },
+
     },
-   
-},
-    series: [{ data: [] }]
+    series: [{data: []}]
   });
 
-
-  const [xAxisData, setxAxisData] = useState(null)
-  const [yAxisData, setyAxisData] = useState(null)
-
   useEffect(() => {
+    let cancel = false;
     fetch(window.host + "/api/v1.0/top_vendors")
-     .then((response) => response.json())
-     .then((data) => {
-      const xAxis=[];
-      const yAxis=[];
-      for (let i = 0; i < data.length; i++) {
-        xAxis.push(data[i].count)
-        yAxis.push(data[i].vendor)
-       
-    } 
-    setxAxisData(xAxis);
-    setyAxisData(yAxis);
-    setOptions({ xAxis: {
-      categories: yAxis,
-      title: {
-          text: "Vendors"
-      }
-  }, series: [{data: xAxis}] });
+      .then((response) => response.json())
+      .then((data) => {
+        if (cancel) return;
+        const xAxis=[];
+        const yAxis=[];
+        for (let i = 0; i < data.length; i++) {
+          yAxis.push(data[i].count)
+          xAxis.push(data[i].vendor)
+
+        }
+        setOptions({ xAxis: {
+          categories: xAxis,
+          title: {
+              text: "Vendors"
+          }
+        }, series: [{data: yAxis}] });
     
 
-    })
+     })
+
+    return () => {
+      cancel = true;
+    }
     
   },[]);
 
