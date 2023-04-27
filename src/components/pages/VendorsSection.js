@@ -2,18 +2,13 @@ import React from "react";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useState, useEffect } from 'react';
+import axios from "axios";
 
 
 function VendorsSection() {
   const [value, setValue] = React.useState('fruit');
   const optionsOne = [
     {label: 'All Time', value: 'all'},
-    {label: 'Last Day', value: '1d'},
-    {label: 'Last 4 Days', value: '4d'},
-    {label: 'Last Week', value: '1w'},
-    {label: 'Last Month', value: '1m'},
-    {label: 'Last 3 Months', value: '3m'},
-    {label: 'Last 6 Months', value: '6m'},
     {label: 'Last Year', value: '1y'},
     {label: 'Last 3 Years', value: '3y'},
     {label: 'Last 5 Years', value: '5y'},
@@ -27,63 +22,61 @@ function VendorsSection() {
   const [options, setOptions] = useState({
     chart: {
       type: 'column'
-  },legend: {
-    enabled: false
-  }, 
+    }, legend: {
+      enabled: false
+    },
     title: {
       text: ""
     },
     xAxis: {
       categories: [],
       title: {
-          text: "Vendors"
+        text: "Vendors"
       }
-  },
-  plotOptions: {
-    series: {
+    },
+    plotOptions: {
+      series: {
         color: '#009bb0'
-    }
-},
-  yAxis: {
-    title: {
-        text: 'Count',
+      }
     },
-    labels: {
+    yAxis: {
+      title: {
+        text: 'Vulnerability Count',
+      },
+      labels: {
         overflow: 'justify'
+      },
+
     },
-   
-},
-    series: [{ data: [] }]
+    series: [{data: []}]
   });
 
-
-  const [xAxisData, setxAxisData] = useState(null)
-  const [yAxisData, setyAxisData] = useState(null)
-
   useEffect(() => {
-    fetch(window.host + "/api/v1.0/top_vendors")
-     .then((response) => response.json())
-     .then((data) => {
+    let cancel = false;
+    axios.get(window.host + "/api/v1.0/top_vendors", {params: {duration: value}}).then((response) => {
+      if (cancel) return;
+      let data = response.data;
       const xAxis=[];
       const yAxis=[];
       for (let i = 0; i < data.length; i++) {
-        xAxis.push(data[i].count)
-        yAxis.push(data[i].vendor)
-       
-    } 
-    setxAxisData(xAxis);
-    setyAxisData(yAxis);
-    setOptions({ xAxis: {
-      categories: yAxis,
-      title: {
-          text: "Vendors"
-      }
-  }, series: [{data: xAxis}] });
-    
+        yAxis.push(data[i].count)
+        xAxis.push(data[i].vendor)
 
-    })
+      }
+      setOptions({ xAxis: {
+        categories: xAxis,
+        title: {
+            text: "Vendors"
+        }
+      }, series: [{data: yAxis, name: "Vulnerability Count"}] });
+    });
+
+
+    return () => {
+      cancel = true;
+    }
     
-  },[]);
+  },[value]);
 
   return (
     <div>

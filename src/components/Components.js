@@ -169,3 +169,16 @@ ${props => (props.signinIn !== true ? `transform: translateX(50%);` : null)}
    letter-spacing: 0.5px;
    margin: 20px 0 30px
  `;
+
+ export const ScoreCircle = styled.div`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #009bb0;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+ `

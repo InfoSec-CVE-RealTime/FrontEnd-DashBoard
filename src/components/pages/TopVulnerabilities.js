@@ -1,95 +1,41 @@
 import React from "react";
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
 import {useState, useEffect} from 'react';
+import {ScoreCircle, LoadingSpinner} from '../Components'
+import axios from "axios";
 
 function TopVulnerabilities() {
-  const [value, setValue] = React.useState('fruit');
+  const [value, setValue] = React.useState('all');
+  const [loading, setLoading] = useState(true);
   const optionsOne = [
-
     {label: 'All Time', value: 'all'},
-    {label: 'Last Day', value: '1d'},
-    {label: 'Last 4 Days', value: '4d'},
-    {label: 'Last Week', value: '1w'},
-    {label: 'Last Month', value: '1m'},
     {label: 'Last 3 Months', value: '3m'},
     {label: 'Last 6 Months', value: '6m'},
     {label: 'Last Year', value: '1y'},
     {label: 'Last 3 Years', value: '3y'},
     {label: 'Last 5 Years', value: '5y'},
     {label: 'Last 10 Years', value: '10y'}
-
   ];
 
+  const [topVulnerabilities, setTopVulnerabilities] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]);
 
   const handleChange = (event) => {
-
     setValue(event.target.value);
-
-
   };
-  const [options, setOptions] = useState({
-    chart: {
-      type: 'bar'
-    }, legend: {
-      enabled: false
-    },
-    title: {
-      text: ""
-    },
-    xAxis: {
-      categories: [],
-      title: {
-        text: "CVE ID"
-      }
-    },
-    plotOptions: {
-      series: {
-        color: '#009bb0'
-      }
-    },
-    yAxis: {
-      title: {
-        text: 'CVS Score',
-      },
-      labels: {
-        overflow: 'justify'
-      },
-
-    },
-    series: [{data: []}]
-  });
-
-
-  const [xAxisData, setxAxisData] = useState(null)
-  const [yAxisData, setyAxisData] = useState(null)
 
   useEffect(() => {
-    fetch(window.host + "/api/v1.0/top_cves")
-      .then((response) => response.json())
-      .then((data) => {
-        const xAxis = [];
-        const yAxis = [];
-        for (let i = 0; i < data.length; i++) {
-          xAxis.push(data[i].cvss)
-          yAxis.push(data[i].cve_id)
+    let cancel = false;
+    axios.get(window.host + "/api/v1.0/top_cves", {params: {duration: value}}).then((response) => {
+      let data = response.data;
+      if (cancel) return;
+      setTopVulnerabilities(data)
+      setLoading(false)
+    })
 
-        }
-        setxAxisData(xAxis);
-        setyAxisData(yAxis);
-        setOptions({
-          xAxis: {
-            categories: yAxis,
-            title: {
-              text: "CVE ID"
-            }
-          }, series: [{data: xAxis}]
-        });
+    return () => {
+      cancel = true;
+    }
 
-
-      })
-
-  }, []);
+  }, [value]);
   return (
     <div>
       <div className="d-flex justify-content-between">
@@ -102,11 +48,24 @@ function TopVulnerabilities() {
         </select>
       </div>
 
-      <div className="content-box mt-2 pt-4">
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
-        />
+      <div className="content-box mt-2 pt-3 ps-4 pe-4 pb-3" style={{maxHeight: "70vh", overflowY: "scroll"}}>
+        {loading ? <LoadingSpinner/> : (
+          <>
+            {topVulnerabilities.map((topVulnerability) => {
+              let index = topVulnerabilities.indexOf(topVulnerability);
+              let url = topVulnerability.cve_id ? "https://nvd.nist.gov/vuln/detail/" + topVulnerability.cve_id : "";
+              return (
+                <div className="d-flex justify-content-start mt-3">
+                  <ScoreCircle className="flex-shrink-0">{index+1}</ScoreCircle>
+                  <div className="ms-3">
+                    <h5><a href={url} target="_blank" className="text-selected">{topVulnerability.cve_id}</a>{topVulnerability.cvss && <span className="ms-3 text-muted small">CVS Score: {topVulnerability.cvss}</span>}</h5>
+                    <div>{topVulnerability.summary}</div>
+                  </div>
+                </div>
+              )
+            })}
+          </>
+        )}
       </div>
     </div>
   );
