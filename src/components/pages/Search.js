@@ -104,6 +104,10 @@ function Search(props) {
       }
     });
     rankedItems.sort((a, b) => {
+      if (a.rank === b.rank) {
+        // sort alphabetically by item.item
+        return a.item.localeCompare(b.item);
+      }
       return b.rank - a.rank;
     });
     return rankedItems.slice(0, 100).map((item) => {
