@@ -146,7 +146,7 @@ const SignIn = () => {
                     placeholder="Confirm Password"
                     onChange={handleConfirmPasswordChange}
                   />
-                  <Components.Button onClick={callApiSignUP}>Sign Up</Components.Button>
+                  <Components.Button onClick={callApiSignUP} role="button" type="button">Sign Up</Components.Button>
                 </Components.Form>
               </Components.SignUpContainer>
 
@@ -166,7 +166,7 @@ const SignIn = () => {
                     onChange={handlePasswordChange}
                   />
                   <Components.Anchor href="#">Forgot your password?</Components.Anchor>
-                  <Components.Button onClick={callApiSignIn}>Sign In</Components.Button>
+                  <Components.Button onClick={callApiSignIn} role="button" type="button">Sign In</Components.Button>
                 </Components.Form>
               </Components.SignInContainer>
 

@@ -64,12 +64,14 @@ function ThreatProliferation() {
           xAxis.push(data[i].date)
 
         }
+        console.log(xAxis)
+        console.log(yAxis)
         setOptions({ xAxis: {
           categories: xAxis,
           title: {
               text: "Date"
           }
-        }, series: [{ data: yAxis}] });
+        }, series: [{ data: yAxis, name: "Vulnerability Count"}] });
 
 
       })
