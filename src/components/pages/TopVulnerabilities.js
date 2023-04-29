@@ -9,7 +9,7 @@ function TopVulnerabilities() {
   const optionsOne = [
     {label: 'All Time', value: 'all'},
     {label: 'Last 24 Hours', value: '1d'},
-    {label: 'Last 3 Days', value: '3d'},
+    {label: 'Last 4 Days', value: '4d'},
     {label: 'Last Week', value: '1w'},
     {label: 'Last Month', value: '1m'},
     {label: 'Last 3 Months', value: '3m'},
