@@ -8,6 +8,10 @@ function TopVulnerabilities() {
   const [loading, setLoading] = useState(true);
   const optionsOne = [
     {label: 'All Time', value: 'all'},
+    {label: 'Last 24 Hours', value: '1d'},
+    {label: 'Last 3 Days', value: '3d'},
+    {label: 'Last Week', value: '1w'},
+    {label: 'Last Month', value: '1m'},
     {label: 'Last 3 Months', value: '3m'},
     {label: 'Last 6 Months', value: '6m'},
     {label: 'Last Year', value: '1y'},

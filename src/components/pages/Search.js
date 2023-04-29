@@ -7,6 +7,7 @@ import {LoadingSpinner} from "../Components";
 import axios from "axios";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import {XLg, PlusLg} from "react-bootstrap-icons";
 
 const COLORS = [
   "hsl(0, 100%, 40%)",
@@ -283,7 +284,9 @@ function Search(props) {
                   <Button variant="outline-secondary" className="w-100 mt-1" onClick={reset_search_input}>Clear</Button>
                   <div className="content-box search-results mt-2">
                     {items.map((item) => (
-                      <div className="search-result" onClick={() => select_item(item)}>{get_highlighted_item(item.label, search)}</div>
+                      <div className="search-result d-flex justify-content-between" onClick={() => select_item(item)}>
+                        <div>{get_highlighted_item(item.label, search)}</div><PlusLg className="text-success me-1 text-lg"></PlusLg>
+                      </div>
                     ))}
                   </div>
                 </>
@@ -295,7 +298,9 @@ function Search(props) {
                   ) : (
                   <div className="mt-2">
                     {selectedItems.map((item) => (
-                      <div className="search-result" onClick={() => deselect_item(item)}>{item.label}</div>
+                      <div className="search-result d-flex justify-content-between" onClick={() => deselect_item(item)}>
+                        <div>{item.label}</div><XLg className="text-danger me-1 text-lg"></XLg>
+                      </div>
                     ))}
                   </div>
                   )
