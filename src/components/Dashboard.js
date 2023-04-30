@@ -78,8 +78,8 @@ function Dashboard() {
               <NavLink onClick={() => setActivePage("VendorsSection")} activeStyle className={activePage === "VendorsSection" ? "text-selected" : ""}>Top Vendors</NavLink>
               <NavLink onClick={() => setActivePage("ProductsSection")} activeStyle className={activePage === "ProductsSection" ? "text-selected" : ""}>Top Products</NavLink>
               <NavLink onClick={() => setActivePage("TopVulnerabilities")} activeStyle className={activePage === "TopVulnerabilities" ? "text-selected" : ""}>Top Vulnerabilities</NavLink>
-              <NavLink onClick={() => setActivePage("Clustering")} activeStyle className={activePage === "Clustering" ? "text-selected" : ""}>Clustering</NavLink>
-              <NavLink onClick={() => setActivePage("ImpactOverTheYears")} activeStyle className={activePage === "ImpactOverTheYears" ? "text-selected border-bottom-0" : "border-bottom-0"}>Impact Over The Years</NavLink>
+              {/*<NavLink onClick={() => setActivePage("Clustering")} activeStyle className={activePage === "Clustering" ? "text-selected" : ""}>Clustering</NavLink>*/}
+              {/*<NavLink onClick={() => setActivePage("ImpactOverTheYears")} activeStyle className={activePage === "ImpactOverTheYears" ? "text-selected border-bottom-0" : "border-bottom-0"}>Impact Over The Years</NavLink>*/}
             </Nav>
             <Nav className="mt-3 p-2 ps-3 pe-3">
               <NavTitle>Account</NavTitle>

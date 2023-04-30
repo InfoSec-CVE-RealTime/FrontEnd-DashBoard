@@ -61,7 +61,7 @@ function ProductsSection() {
       const yAxis=[];
       for (let i = 0; i < data.length; i++) {
         yAxis.push(data[i].count)
-        xAxis.push(data[i].vendor)
+        xAxis.push(data[i].product)
 
       }
       setOptions({ xAxis: {
