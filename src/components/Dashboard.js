@@ -10,13 +10,10 @@ import {useNavigate} from "react-router-dom";
 import TopVulnerabilities from "./pages/TopVulnerabilities";
 import ThreatProliferation from "./pages/ThreatProliferation";
 import ImpactOverTheYears from "./pages/ImpactOverTheYears";
-import ThreatsChangedOverTime from "./pages/ThreatsChangedOverTime";
 import Clustering from "./pages/Clustering";
 import VendorsSection from "./pages/VendorsSection";
 import ProductsSection from "./pages/ProductsSection";
 import Search from "./pages/Search";
-
-const FLASK_SERVER_IP = "http://127.0.0.1:5000";
 
 function Dashboard() {
   const [activePage, setActivePage] = useState("ThreatProliferation");
@@ -24,7 +21,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.post(FLASK_SERVER_IP + "/api/v1.0/user_session", {
+    axios.post(window.host + "/api/v1.0/user_session", {
       "user_id": localStorage.getItem("user_id")
     }).then((response) => {
       if (response.status === 200) {
@@ -42,7 +39,7 @@ function Dashboard() {
   }
 
   function setSubscription(subscribe) {
-    axios.post(FLASK_SERVER_IP + "/api/v1.0/set_subscription", {
+    axios.post(window.host + "/api/v1.0/set_subscription", {
       "user_id": localStorage.getItem("user_id"),
       "subscribe": subscribe
     }).then((response) => {
