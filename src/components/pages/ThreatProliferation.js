@@ -64,8 +64,6 @@ function ThreatProliferation() {
           xAxis.push(data[i].date)
 
         }
-        console.log(xAxis)
-        console.log(yAxis)
         setOptions({ xAxis: {
           categories: xAxis,
           title: {

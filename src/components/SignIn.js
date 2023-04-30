@@ -19,13 +19,11 @@ const SignIn = () => {
   const handleEmailChange = (event) => {
     let email = event.target.value;
     setEmail(email);
-    console.log(email);
   };
 
   const handlePasswordChange = (event) => {
     let pass = event.target.value;
     setPassword(pass);
-    console.log(pass);
   };
 
   const toggleIsSignIn = (val) => {
@@ -67,7 +65,6 @@ const SignIn = () => {
 
   const callApiSignIn = async (event) => {
     event.preventDefault();
-    console.log({ email, password });
 
     const userData = {
       email: email,
